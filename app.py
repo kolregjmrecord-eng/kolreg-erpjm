@@ -8,6 +8,7 @@ from datetime import datetime
 if not firebase_admin._apps:
     try:
        credentials.Certificate(dict(st.secrets["firebase"]))
+        
         fb_dict = dict(st.secrets["firebase"])
         cred = credentials.Certificate(fb_dict)
         firebase_admin.initialize_app(cred)
@@ -251,5 +252,6 @@ else:
         st.session_state.clear()
 
         st.rerun()
+
 
 
