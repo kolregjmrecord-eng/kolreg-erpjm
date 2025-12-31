@@ -1,16 +1,11 @@
-import streamlit as st
-import firebase_admin
-from firebase_admin import credentials, firestore
-from datetime import datetime
-import pandas as pd
-
-# --- 1. FIREBASE CONNECTION ---
 if not firebase_admin._apps:
     try:
-        cred = credentials.Certificate("firebase_key.json")
+        # Hum local file ke bajaye Streamlit Secrets use kar rahe hain
+        fb_dict = dict(st.secrets["firebase"])
+        cred = credentials.Certificate(fb_dict)
         firebase_admin.initialize_app(cred)
     except Exception as e:
-        st.error("Chabi (JSON file) nahi mili!")
+        st.error(f"Firebase connect nahi hua: {e}")
 
 db = firestore.client()
 
@@ -241,4 +236,5 @@ else:
     st.sidebar.markdown("---")
     if st.sidebar.button("🔓 Logout", use_container_width=True):
         st.session_state.clear()
+
         st.rerun()
