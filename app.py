@@ -4,7 +4,7 @@ from firebase_admin import credentials, firestore
 import pandas as pd
 from datetime import datetime
 
-# --- 1. FIREBASE CONNECTION (FIXED) ---
+# --- 1. FIREBASE CONNECTION (UPDATED FOR CLOUD) ---
 if not firebase_admin._apps:
     try:
         # Local file ki bajaye ab ye sidha Secrets se connect hoga
@@ -12,7 +12,8 @@ if not firebase_admin._apps:
         cred = credentials.Certificate(fb_dict)
         firebase_admin.initialize_app(cred)
     except Exception as e:
-        st.error(f"Firebase connect nahi hua: {e}")
+        st.error(f"Firebase connection error: {e}")
+        st.stop()
 
 db = firestore.client()
 
@@ -250,3 +251,4 @@ else:
         st.session_state.clear()
 
         st.rerun()
+
