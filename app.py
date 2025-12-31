@@ -1,11 +1,23 @@
+import streamlit as st
+import firebase_admin
+from firebase_admin import credentials, firestore
+import pandas as pd
+from datetime import datetime
+
+# --- 1. FIREBASE CONNECTION (FIXED) ---
 if not firebase_admin._apps:
     try:
-        # Hum local file ke bajaye Streamlit Secrets use kar rahe hain
+        # Local file ki bajaye ab ye sidha Secrets se connect hoga
         fb_dict = dict(st.secrets["firebase"])
         cred = credentials.Certificate(fb_dict)
         firebase_admin.initialize_app(cred)
     except Exception as e:
         st.error(f"Firebase connect nahi hua: {e}")
+
+db = firestore.client()
+
+# --- BAQI CODE WAHI HAI JO HUMNE FINALIZE KIYA THA ---
+# (Yahan aapka purana login aur data entry ka code chalega)
 
 db = firestore.client()
 
