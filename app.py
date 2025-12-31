@@ -1,25 +1,16 @@
 import streamlit as st
 import firebase_admin
 from firebase_admin import credentials, firestore
-import pandas as pd
 from datetime import datetime
+import pandas as pd
 
-# --- 1. FIREBASE CONNECTION (UPDATED FOR CLOUD) ---
+# --- 1. FIREBASE CONNECTION ---
 if not firebase_admin._apps:
     try:
-       credentials.Certificate(dict(st.secrets["firebase"]))
-        
-        fb_dict = dict(st.secrets["firebase"])
-        cred = credentials.Certificate(fb_dict)
+        cred = credentials.Certificate("firebase_key.json")
         firebase_admin.initialize_app(cred)
     except Exception as e:
-        st.error(f"Firebase connection error: {e}")
-        st.stop()
-
-db = firestore.client()
-
-# --- BAQI CODE WAHI HAI JO HUMNE FINALIZE KIYA THA ---
-# (Yahan aapka purana login aur data entry ka code chalega)
+        st.error("Chabi (JSON file) nahi mili!")
 
 db = firestore.client()
 
@@ -250,8 +241,4 @@ else:
     st.sidebar.markdown("---")
     if st.sidebar.button("🔓 Logout", use_container_width=True):
         st.session_state.clear()
-
         st.rerun()
-
-
-
