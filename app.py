@@ -7,7 +7,7 @@ from datetime import datetime
 # --- 1. FIREBASE CONNECTION (UPDATED FOR CLOUD) ---
 if not firebase_admin._apps:
     try:
-        # Local file ki bajaye ab ye sidha Secrets se connect hoga
+       credentials.Certificate(dict(st.secrets["firebase"]))
         fb_dict = dict(st.secrets["firebase"])
         cred = credentials.Certificate(fb_dict)
         firebase_admin.initialize_app(cred)
@@ -251,4 +251,5 @@ else:
         st.session_state.clear()
 
         st.rerun()
+
 
